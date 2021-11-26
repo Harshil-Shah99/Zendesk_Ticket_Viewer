@@ -141,7 +141,13 @@ def run(testing=False, testing_json=""):
     
     if testing:
         return len(json_obj["tickets"])
-        
+    
+    with open('params.json') as f:
+        params = json.load(f)
+    username = params["username"]
+    password = params["password"]
+    subdomain = params["subdomain"]
+            
     page_count = 0
     total_pages = math.ceil(len(json_obj["tickets"])/25)
     
@@ -159,20 +165,21 @@ def run(testing=False, testing_json=""):
                     break
                 
         elif main_choice=='2':
-            print ("\n{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))
+            
+            print ("\n{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))            
             display_ticket(len(json_obj["tickets"])-1, json_obj)
             
         elif main_choice=='3':
-            flag = 0
+            
             select_id = int(input("\nEnter required ticket ID:\t"))
-            for index in range(len(json_obj["tickets"])):
-                if(json_obj["tickets"][index]["id"]==select_id):
-                    print ("\n{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))
-                    display_ticket(index, json_obj)
-                    flag = 1
-            if flag==0:
-                print(f'\nTicket with ID = {select_id} not found')
-                
+            try:
+                response = requests.get(f'https://{subdomain}.zendesk.com/api/v2/tickets/{select_id}', auth=(f'{username}', f'{password}'))
+                json_ticket = response.json()["ticket"]
+                print ("\n{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))
+                print ("{:<12} {:<12} {:<30}".format(json_ticket["id"],json_ticket["status"],json_ticket["subject"]))
+            except:
+                print("Authentication failed. Please make sure that the API is up and running, and that your authentication details are correct")
+
         elif main_choice=='e':
             print("\nExit Successful\nThank you for using my Ticket Viewer and have an awesome day!")
             break
