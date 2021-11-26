@@ -78,8 +78,8 @@ def connect_api():
     try:
         json_obj = ""
         if os.path.exists("params.json"):
-            f = open('params.json')
-            params = json.load(f)
+            with open('params.json') as f:
+                params = json.load(f)
             username = params["username"]
             password = params["password"]
             subdomain = params["subdomain"]
