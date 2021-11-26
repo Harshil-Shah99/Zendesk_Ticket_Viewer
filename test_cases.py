@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Nov 26 06:52:30 2021
-
 @author: hshah6
 """
 # I use the unittest framework to test all of the components of the code

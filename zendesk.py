@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Nov 25 03:36:38 2021
-
 @author: hshah6
 """
 # Code to add tickets in the file tickets.json to the ticketing system
@@ -57,21 +55,21 @@ def take_input(page_count, total_pages, testing = False, testing_choice = ''):
     else:
         choice = testing_choice
         
-    if choice=='r':
+    if choice=='r' or choice=='R':
         if page_count<total_pages-1:
             page_count+=1 
         else:
             print("\nAlready at the last page")
             choice, page_count = take_input(page_count, total_pages)
             
-    elif choice=='l':
+    elif choice=='l' or choice=='L':
         if page_count>0:
             page_count-=1 
         else:
             print("\nAlready at the first page")
             choice, page_count = take_input(page_count, total_pages)
             
-    elif choice=='e':
+    elif choice=='e' or choice=='E':
         pass
     
     else:
@@ -160,7 +158,7 @@ def run(testing=False, testing_json=""):
                 display_page(page_count, total_pages, json_obj)
                 choice, page_count = take_input(page_count, total_pages)
                 
-                if choice=='e':
+                if choice=='e' or choice=='E':
                     print("\nExit to Main Menu Successful")
                     break
                 
@@ -178,9 +176,9 @@ def run(testing=False, testing_json=""):
                 print ("\n{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))
                 print ("{:<12} {:<12} {:<30}".format(json_ticket["id"],json_ticket["status"],json_ticket["subject"]))
             except:
-                print("Authentication failed. Please make sure that the API is up and running, and that your authentication details are correct")
+                print("Invalid Ticket ID")
 
-        elif main_choice=='e':
+        elif main_choice=='e' or main_choice=='E':
             print("\nExit Successful\nThank you for using my Ticket Viewer and have an awesome day!")
             break
         
