@@ -98,6 +98,10 @@ def connect_api():
         if response.status_code==200:
             json_obj = response.json()
             return 1, json_obj
+        elif response.status_code==404 or response.status_code==410:
+            print("\nAPI seems to be unavailable. Please try again later")
+        elif response.status_code==409:
+            print("\nThe request encountered a conflict. Please try again later")
         else:
             return 0, json_obj
         
