@@ -9,15 +9,16 @@ Created on Thu Nov 25 03:36:38 2021
     # }
     
     # data = open('tickets.json')
-    # response = requests.post('https://zcchshah6.zendesk.com/api/v2/imports/tickets/create_many.json', headers=headers, data=data, auth=('hshah6@ncsu.edu', 'Vaibhav_323'))
+    # response = requests.post(f'https://{subdomain}.zendesk.com/api/v2/imports/tickets/create_many.json', headers=headers, data=data, auth=(f'{username}', f'{password}'))
 
 import requests
 import math
 import json
 import os
+import pprint
 
 def display_ticket(index, json_obj):
-    print(json_obj["tickets"][index]["raw_subject"])
+    print ("{:<12} {:<12} {:<30}".format(json_obj["tickets"][index]["id"], json_obj["tickets"][index]["status"], json_obj["tickets"][index]["subject"]))
     
 def display_page(page_count, total_pages, json_obj):
     if page_count==total_pages-1:
@@ -29,6 +30,7 @@ def display_page(page_count, total_pages, json_obj):
         
     print("\nThis is page  - " + str(page_count+1) + " of " + str(total_pages) + " | Showing " + str(entry_count) + " entries:\n")
     
+    print ("{:<12} {:<12} {:<30}".format('Ticket ID','Status','Subject'))
     for index in range(25*page_count, end_of_range):
         display_ticket(index, json_obj)
 
@@ -77,9 +79,9 @@ def connect_api():
     
     try:
         response = requests.get(f'https://{subdomain}.zendesk.com/api/v2/tickets.json', auth=(f'{username}', f'{password}'))
-        json_obj = response.json()
         
         if response.status_code==200:
+            json_obj = response.json()
             return 1, json_obj
         else:
             return 0, json_obj
@@ -94,6 +96,10 @@ def run():
     
     if status==0:
         return 0
+    
+    if len(json_obj["tickets"])==0:
+        print("\nYou have no tickets left to resolve. Yayy!")
+        return 1
     
     page_count = 0
     total_pages = math.ceil(len(json_obj["tickets"])/25)
