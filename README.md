@@ -20,12 +20,41 @@ Command-Line Interface (CLI) to run the code.
 - `sample_username` with the email ID related to your account
 - `sample_password` with your account password
 - `sample_subdomain` with your current subdomain starting with zcc
-4. Ensure that you have a working internet connection
+4. Make sure that your zendesk account supports Password Access for the API. You can do this by going to </br>Admin settings->Apps & Integrations->Zendesk API->Enable Password Access
+5. Ensure that you have a working internet connection
 
 ## Steps to run
 1. After navigating to the root directory as outlined earlier, run the command `py zendesk.py` to execute the code
 2. Run the command `py test_cases.py` to execute the test cases
 - Note: In steps 1 and 2, if there are any issues, you can try replacing `py` with `py -3` or `python` or `python3`. Sometimes there may be multiple versions of python installed 
 from before, so using one of these commands instead may help you execute the code using the correct one.
+3. If you are having any issues with the requests library, please run the command `pip install requests` and then restart the command prompt.
 
 ## Sample Outputs
+- Main Menu and selecting option 1:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/main_menu.JPG)
+</br>
+
+- First page of 25 entries:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/page1.JPG)
+</br>
+
+- Attempt to move further than the last page - Shows appropriate message:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/last_page.JPG)
+</br>
+
+- Selecting option 2 - Show newest ticket:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/last_ticket.JPG)
+</br>
+
+- Selecting option 3 - Show ticket by inputting ticket ID:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/ticket_id.JPG)
+</br>
+
+- Selecting option e - Exiting the code:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/exit.JPG)
+</br>
+
+- Running the test_cases.py file - all tests cases pass:</br>
+![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/test.JPG)
+</br>
