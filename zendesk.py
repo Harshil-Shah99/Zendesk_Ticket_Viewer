@@ -80,7 +80,7 @@ def take_input(page_count, total_pages, testing = False, testing_choice = ''):
         
     return choice, page_count
 
-# Function to send the API request and obtain the response content as a json object
+# Function to send the API request page by page fetching 100 tickets at a time and obtaining the concatenated response content as a json object
 def connect_api():
     try:
         json_obj = ""
@@ -100,15 +100,22 @@ def connect_api():
         return 0, json_obj
     
     try:
-        response = requests.get(f'https://{subdomain}.zendesk.com/api/v2/tickets.json', auth=(f'{username}', f'{password}'))
-        
+
+        response = requests.get(f'https://{subdomain}.zendesk.com/api/v2/tickets.json?page[size]=100', auth=(f'{username}', f'{password}'))
         if response.status_code==200:
             json_obj = response.json()
+            while(response.json()["meta"]["has_more"]==True):
+                link = response.json()["links"]["next"]
+                response = requests.get(link, auth=(f'{username}', f'{password}'))
+                json_obj["tickets"].extend(response.json()["tickets"])
+                
             return 1, json_obj
         elif response.status_code==404 or response.status_code==410:
             print("\nAPI seems to be unavailable. Please try again later")
+            return 0, json_obj
         elif response.status_code==409:
             print("\nThe request encountered a conflict. Please try again later")
+            return 0, json_obj
         else:
             return 0, json_obj
         
