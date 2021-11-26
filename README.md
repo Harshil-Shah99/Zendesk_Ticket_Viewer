@@ -30,6 +30,19 @@ Command-Line Interface (CLI) to run the code.
 from before, so using one of these commands instead may help you execute the code using the correct one.
 3. If you are having any issues with the requests library, please run the command `pip install requests` and then restart the command prompt.
 
+## Design Choices and Justification:
+- I have chosen to display only 3 of all of the ticket attributes - Ticket ID, Status, and Subject. 
+</br>My reasoning is to keep things simple and concise, because overcrowding the command-line interface would be counter-productive when navigating tickets or when evaluating which ticket to work on. 
+</br>I have omitted creation time because the combination of Ticket ID and Status can already give a general idea of when the ticket was opened. 
+</br>I have chosen to keep Status, because it is, in my opinion, the most important attribute when it comes to determining the urgency of the ticket.
+- I have structured Code to keep different functions in different files to make the code more readable and to easily understand the different components of the code
+- I load all of the tickets into one json object at the beginning by using cursor pagination and appending each page to the object. 
+</br>Then, I use my code to create a pagination system because the number of tickets that I interfaced with were fewer and this method was much faster for fewer tickets than calling the API every time I wanted to change the page. 
+</br> If scaling the software to 10s of thousands of tickets or more, I would use the cursor pagination and the 'next' and 'prev' links it provides to implement pagination instead
+- I have used the API directly to fetch a single ticket for a given ticket ID because it is much more efficient than iterating through the list of all tickets. 
+However, to get the newest ticket, I have directly used the last element of the ticket list that I had created initially, because that makes more sense time-wise.
+- I have chosen CLI because it is something new that I wanted to learn and because it is more easily implemented when developing in Python
+
 ## Sample Outputs
 - Main Menu and selecting option 1:</br>
 ![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/main_menu.JPG)
@@ -58,3 +71,5 @@ from before, so using one of these commands instead may help you execute the cod
 - Running the test_cases.py file - all tests cases pass:</br>
 ![image](https://github.com/Harshil-Shah99/Zendesk_Ticket_Viewer/blob/master/Images/test.JPG)
 </br>
+
+
