@@ -4,19 +4,22 @@ Created on Thu Nov 25 03:36:38 2021
 
 @author: hshah6
 """
- # headers = {
-    #     'Content-Type': 'application/json',
-    # }
-    
-    # data = open('tickets.json')
-    # response = requests.post(f'https://{subdomain}.zendesk.com/api/v2/imports/tickets/create_many.json', headers=headers, data=data, auth=(f'{username}', f'{password}'))
+# Code to add tickets in the file tickets.json to the ticketing system
+# headers = {
+   #     'Content-Type': 'application/json',
+   # }
+   
+   # data = open('tickets.json')
+   # response = requests.post(f'https://{subdomain}.zendesk.com/api/v2/imports/tickets/create_many.json', headers=headers, data=data, auth=(f'{username}', f'{password}'))
 
+# Import required libraries
 import requests
 import math
 import json
 import os
 import pprint
 
+# Function to display a particular ticket using its index value at the list of all tickets
 def display_ticket(index, json_obj, testing = False):
     if testing:
         return json_obj["tickets"][index]["id"], json_obj["tickets"][index]["status"], json_obj["tickets"][index]["subject"]
@@ -24,7 +27,9 @@ def display_ticket(index, json_obj, testing = False):
     print ("{:<12} {:<12} {:<30}".format(json_obj["tickets"][index]["id"], json_obj["tickets"][index]["status"], json_obj["tickets"][index]["subject"]))
     
     
-    
+# Function to display a single page of tickets, capped at 25 tickets per page
+# Works by passing the current page number and printing all tickets from 25
+# times that page number to a maximum of 25 tickets
 def display_page(page_count, total_pages, json_obj, testing = False):
     if page_count==total_pages-1:
         end_of_range = len(json_obj["tickets"])
@@ -44,7 +49,8 @@ def display_page(page_count, total_pages, json_obj, testing = False):
     for index in range(25*page_count, end_of_range):
         display_ticket(index, json_obj)
 
-
+# Function to page through the tickets by taking in input choices to move to
+# either to the previous or the next page
 def take_input(page_count, total_pages, testing = False, testing_choice = ''):
     if not testing:
         choice = input("\nPress - | r:Next Page | l:Previous Page | e:Exit to Main Menu | -\t")
@@ -74,6 +80,7 @@ def take_input(page_count, total_pages, testing = False, testing_choice = ''):
         
     return choice, page_count
 
+# Function to send the API request and obtain the response content as a json object
 def connect_api():
     try:
         json_obj = ""
@@ -106,9 +113,10 @@ def connect_api():
             return 0, json_obj
         
     except:
-        print("Authentication failed. Please make sure parameters are correctly set in params.json")
+        print("Authentication failed. Please make sure that the API is up and the parameters are correctly set in params.json")
         return 0, json_obj
     
+# Main function where the execution begins, from which the other functions are called
 def run(testing=False, testing_json=""):
 
     status, json_obj = connect_api()
