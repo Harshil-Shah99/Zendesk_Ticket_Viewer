@@ -1,3 +1,5 @@
+![Github](https://img.shields.io/badge/Language-Python-red.svg)
+![Github](https://img.shields.io/badge/Method-Command--Line%20Interface-blue)
 # Zendesk_Ticket_Viewer - Harshil Shah
 This is my submission for the Zendesk intern coding challenge.
 
@@ -26,4 +28,4 @@ Command-Line Interface (CLI) to run the code.
 - Note: In steps 1 and 2, if there are any issues, you can try replacing `py` with `py -3` or `python` or `python3`. Sometimes there may be multiple versions of python installed 
 from before, so using one of these commands instead may help you execute the code using the correct one.
 
-## 
+## Sample Outputs
